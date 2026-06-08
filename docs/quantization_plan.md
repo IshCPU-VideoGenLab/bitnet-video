@@ -74,10 +74,10 @@ This is mathematically equivalent to true binary matmul but doesn't
 get the speed benefit of XNOR+popcount. The purpose is to measure
 **quality impact** independently from **speed optimization**.
 
-### Phase 5 (avx2-kernels): True Binary Ops
+### Phase 5 (simd-kernels): True Binary Ops
 
-Phase 5 replaces step 3 with actual XNOR + popcount using AVX2
-intrinsics. That's where the real speedup materializes.
+Phase 5 replaces step 3 with actual XNOR + popcount using portable SIMD
+intrinsics (AVX2 on x86, NEON on ARM). That's where the real speedup materializes.
 
 ## Straight-Through Estimator (STE)
 

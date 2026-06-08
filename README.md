@@ -28,7 +28,7 @@ GPUs dominate AI because of fast floating-point matrix multiplication. But when 
 | 2 | [mamba-video](https://github.com/IshCPU-VideoGenLab/mamba-video) | ~2× (O(n²)→O(n)) |
 | 3 | [codec-video-gen](https://github.com/IshCPU-VideoGenLab/codec-video-gen) | ~4-6× (temporal) |
 | **4** | **bitnet-video** (this repo) | **~8-16× (binary ops)** |
-| 5 | avx2-kernels | Hardware-native |
+| 5 | simd-kernels | Hardware-native (AVX2 + NEON) |
 | 6 | (distributed) | Multi-machine |
 | 7 | cpu-video-gen | Full pipeline |
 

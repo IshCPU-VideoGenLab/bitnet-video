@@ -60,4 +60,4 @@
 - [ ] Update README with results
 - [ ] Clean code, all tests pass
 - [ ] Tag v0.1.0
-- [ ] Write Phase 5 (avx2-kernels) handoff summary
+- [ ] Write Phase 5 (simd-kernels) handoff summary
