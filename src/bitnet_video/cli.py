@@ -11,7 +11,7 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     sub = parser.add_subparsers(dest="command")
 
     q = sub.add_parser("quantize", help="Quantize a model to 1-bit")
-    q.add_argument("--model", type=str, default="wan-1.3b")
+    q.add_argument("--model", type=str, default="Wan-AI/Wan2.1-T2V-1.3B-Diffusers")
     q.add_argument("--model-path", type=str, default=None)
     q.add_argument("--output", type=str, default="results")
     q.add_argument("--activation-bits", type=int, default=8)
@@ -22,7 +22,7 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     b.add_argument("--debug", action="store_true")
 
     a = sub.add_parser("analyze", help="Analyze weight distributions")
-    a.add_argument("--model", type=str, default="wan-1.3b")
+    a.add_argument("--model", type=str, default="Wan-AI/Wan2.1-T2V-1.3B-Diffusers")
     a.add_argument("--model-path", type=str, default=None)
     a.add_argument("--output", type=str, default="results")
     a.add_argument("--debug", action="store_true")
@@ -41,14 +41,14 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     if args.command == "quantize":
         import torch
-        from transformers import AutoModel
+        from diffusers import WanTransformer3DModel
         from bitnet_video.config import QuantConfig
         from bitnet_video.converter import quantize_model
         from bitnet_video.report import save_json, format_conversion_report
 
         dtype_map = {"float16": torch.float16, "float32": torch.float32}
         path = args.model_path or args.model
-        model = AutoModel.from_pretrained(path, torch_dtype=torch.float16, trust_remote_code=True, low_cpu_mem_usage=True)
+        model = WanTransformer3DModel.from_pretrained(path, subfolder="transformer", torch_dtype=torch.float16, low_cpu_mem_usage=True)
         model.eval()
 
         config = QuantConfig(activation_bits=args.activation_bits, output_dir=args.output)
@@ -73,12 +73,12 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     elif args.command == "analyze":
         import torch
-        from transformers import AutoModel
+        from diffusers import WanTransformer3DModel
         from bitnet_video.quality import analyze_weight_distribution
         from bitnet_video.report import save_json
 
         path = args.model_path or args.model
-        model = AutoModel.from_pretrained(path, torch_dtype=torch.float16, trust_remote_code=True, low_cpu_mem_usage=True)
+        model = WanTransformer3DModel.from_pretrained(path, subfolder="transformer", torch_dtype=torch.float16, low_cpu_mem_usage=True)
         results = analyze_weight_distribution(model)
         save_json(results, args.output, "weight_analysis.json")
         print(f"\nAnalyzed {len(results)} weight tensors. Results saved to {args.output}/weight_analysis.json")
