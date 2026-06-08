@@ -35,7 +35,7 @@ class QuantConfig:
     symmetric: bool = True
     per_channel: bool = False
     output_dir: str = "results"
-    model_name: str = "wan-1.3b"
+    model_name: str = "Wan-AI/Wan2.1-T2V-1.3B-Diffusers"
     model_path: Optional[str] = None
     dtype: str = "float16"
     verbose: bool = True
