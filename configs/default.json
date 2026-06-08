@@ -1,0 +1,1 @@
+{"weight_bits":1,"activation_bits":8,"skip_patterns":["norm","embed","ln","layernorm","pos_embed"],"quantize_conv":true,"quantize_linear":true,"symmetric":true}
